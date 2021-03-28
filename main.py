@@ -79,32 +79,41 @@ first_color = get_color_choice()
 
 second_color = get_color_choice()
 
-
 # рисуем ряды каждого типа
-
+line = 0
 for c in range(0, num_hex, 4):
-    for i in range(0, num_hex, 2):
-        draw_hexagon(i * (r * 2), -c * (6/4) * side, side, second_color)
-    for i in range(1, num_hex, 2):
-        draw_hexagon(i * (r * 2), -c * (6/4) * side, side, first_color)
-
-for c in range(0, num_hex, 4):
-    for i in range(0, num_hex, 2):
-        draw_hexagon(i * (r * 2) - r, -c * (6/4) * side - (side+perpendicular), side, second_color)
-    for i in range(1, num_hex, 2):
-        draw_hexagon(i * (r * 2) - r, -c * (6/4) * side - (side+perpendicular), side, first_color)
-
-for c in range(0, num_hex, 4):
-    for i in range(0, num_hex, 2):
-        draw_hexagon(i * (r * 2), -c * (6/4) * side - 3 * side, side, first_color)
-    for i in range(1, num_hex, 2):
-        draw_hexagon(i * (r * 2), -c * (6/4) * side - 3 * side, side, second_color)
-
-for c in range(0, num_hex, 4):
-    for i in range(0, num_hex, 2):
-        draw_hexagon(i * (r * 2) - r, -c * (6/4) * side - (4 * side + perpendicular), side, first_color)
-    for i in range(1, num_hex, 2):
-        draw_hexagon(i * (r * 2) - r, -c * (6/4) * side - (4 * side + perpendicular), side, second_color)
+    line += 1
+    if line <= num_hex:
+        for i in range(0, num_hex, 2):
+            draw_hexagon(i * (r * 2), -c * (6 / 4) * side, side, second_color)
+        for i in range(1, num_hex, 2):
+            draw_hexagon(i * (r * 2), -c * (6 / 4) * side, side, first_color)
+    else:
+        break
+    line += 1
+    if line <= num_hex:
+        for i in range(0, num_hex, 2):
+            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (side + perpendicular), side, second_color)
+        for i in range(1, num_hex, 2):
+            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (side + perpendicular), side, first_color)
+    else:
+        break
+    line += 1
+    if line <= num_hex:
+        for i in range(0, num_hex, 2):
+            draw_hexagon(i * (r * 2), -c * (6 / 4) * side - 3 * side, side, first_color)
+        for i in range(1, num_hex, 2):
+            draw_hexagon(i * (r * 2), -c * (6 / 4) * side - 3 * side, side, second_color)
+    else:
+        break
+    line += 1
+    if line <= num_hex:
+        for i in range(0, num_hex, 2):
+            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (4 * side + perpendicular), side, first_color)
+        for i in range(1, num_hex, 2):
+            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (4 * side + perpendicular), side, second_color)
+    else:
+        break
 
 # рисуем рамку проверки на 500 символов
 t.up()
