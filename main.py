@@ -1,15 +1,16 @@
-'''
+"""
 Case-study Тесселяция
 Разработчики:
 Кондрашов -
 Бикметов -
 Бычков -
-'''
+"""
 
+import turtle as t
 
 
 def get_num_hexagons():
-    '''Запрос колличества шестиугольников + прверка'''
+    """Запрос колличества шестиугольников + прверка"""
     print('Пожалуйста, введите количество шестиугольников, располагаемых в ряд: ', end='')
     g = 0
     while g != 1:
@@ -25,10 +26,12 @@ def get_num_hexagons():
 
 
 def get_color_choice():
-    '''Из предлженных цветов предлагает пользователю выбрать один + проверка'''
-    print('Пожалуйста, выберите цвет\nДопустимые цвета заливки:\nкрасный\nсиний\nзеленый\nжелтый\nоранжевый\nфиолетовый\nрозовый\nциан\nсерый\nчерный')
+    """Из предлженных цветов предлагает пользователю выбрать один + проверка"""
+    print(
+        'Пожалуйста, выберите цвет\nДопустимые цвета заливки:\nкрасный\nсиний\nзеленый\nжелтый\nоранжевый\nфиолетовый\nрозовый\nциан\nсерый\nчерный')
     print('Пожалуйста, введите цвет: ', end='')
-    list_color = ['красный', 'синий', 'зеленый', 'желтый', 'оранжевый', 'фиолетовый', 'розовый', 'циан', 'серый', 'черный']
+    list_color = ['красный', 'синий', 'зеленый', 'желтый', 'оранжевый', 'фиолетовый', 'розовый', 'циан', 'серый',
+                  'черный']
     englist = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'cyan', 'gray', 'black']
     g = 0
     while g != 1:
@@ -42,31 +45,81 @@ def get_color_choice():
         else:
             print('"', c, '"', ' не является верным значением. Пожалуйста, повторите попытку: ', sep='', end='')
 
-import turtle as t
-t.speed(100)
 
 def draw_hexagon(x, y, side, color):
-    '''Рисует правильный шестиуглольник на координатах, с заданной стороной, нужного цвета'''
-    t.goto(x,y)
+    """Рисует правильный шестиуглольник на координатах, с заданной стороной, нужного цвета"""
+    t.up()
+    t.speed(10000)
+    t.goto(x, y)
     t.down()
     t.color(color)
     t.left(30)
     t.begin_fill()
-    for r in range(6):
+    for const in range(6):
         t.forward(side)
         t.right(60)
     t.end_fill()
     t.color('black')
-    for r in range(6):
+    for const in range(6):
         t.forward(side)
         t.right(60)
     t.right(30)
     t.up()
 
 
+num_hex = get_num_hexagons()
 
-'''
-Мой вам совет - рисунок может багнуться, изза функции, для того чтобы этого не происходило 
-вам надо всегда возвращать черепаху под тот угол, в котором она начианлась, НО, скорее всего, 
-это не произойдет так как я уже предусмотрел это в дефе и вам не нужно поворачивать рисунок 6уг
-'''
+r = 500 / ((int(num_hex) * 2) + 1)
+
+side = (2 * r) / (3 ** (1 / 2))
+
+perpendicular = (side ** 2 - r ** 2) ** (1 / 2)
+
+first_color = get_color_choice()
+
+second_color = get_color_choice()
+
+# рисуем ряды каждого типа
+line = 0
+for c in range(0, num_hex, 4):
+    line += 1
+    if line <= num_hex:
+        for i in range(0, num_hex, 2):
+            draw_hexagon(i * (r * 2), -c * (6 / 4) * side, side, second_color)
+        for i in range(1, num_hex, 2):
+            draw_hexagon(i * (r * 2), -c * (6 / 4) * side, side, first_color)
+    else:
+        break
+    line += 1
+    if line <= num_hex:
+        for i in range(0, num_hex, 2):
+            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (side + perpendicular), side, second_color)
+        for i in range(1, num_hex, 2):
+            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (side + perpendicular), side, first_color)
+    else:
+        break
+    line += 1
+    if line <= num_hex:
+        for i in range(0, num_hex, 2):
+            draw_hexagon(i * (r * 2), -c * (6 / 4) * side - 3 * side, side, first_color)
+        for i in range(1, num_hex, 2):
+            draw_hexagon(i * (r * 2), -c * (6 / 4) * side - 3 * side, side, second_color)
+    else:
+        break
+    line += 1
+    if line <= num_hex:
+        for i in range(0, num_hex, 2):
+            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (4 * side + perpendicular), side, first_color)
+        for i in range(1, num_hex, 2):
+            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (4 * side + perpendicular), side, second_color)
+    else:
+        break
+
+# рисуем рамку проверки на 500 символов
+t.up()
+t.goto(-r, perpendicular)
+t.down()
+for i in range(4):
+    t.forward(500)
+    t.right(90)
+t.done()
