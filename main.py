@@ -48,7 +48,6 @@ def get_color_choice():
 
 def draw_hexagon(x, y, side, color):
     """Рисует правильный шестиуглольник на координатах, с заданной стороной, нужного цвета"""
-    t.up()
     t.speed(10000)
     t.goto(x, y)
     t.down()
@@ -81,14 +80,32 @@ second_color = get_color_choice()
 
 
 # рисуем ряды каждого типа
+
 for c in range(0, num_hex + 1, 6):
     for i in range(0, num_hex, 2):
         draw_hexagon(i * (r * 2), -c * side, side, second_color)
     for i in range(1, num_hex, 2):
         draw_hexagon(i * (r * 2), -c * side, side, first_color)
 
+for c in range(0, num_hex + 1, 6):
+    for i in range(0, num_hex, 2):
+        draw_hexagon(i * (r * 2) - r, -c * side - (side+perpendicular), side, second_color)
+    for i in range(1, num_hex, 2):
+        draw_hexagon(i * (r * 2) - r, -c * side - (side+perpendicular), side, first_color)
 
-# рисуем рамку проверки в 500 пикселей
+for c in range(0, num_hex + 1, 6):
+    for i in range(0, num_hex, 2):
+        draw_hexagon(i * (r * 2), -c * side - 3 * side, side, first_color)
+    for i in range(1, num_hex, 2):
+        draw_hexagon(i * (r * 2), -c * side - 3 * side, side, second_color)
+
+for c in range(0, num_hex + 1, 6):
+    for i in range(0, num_hex, 2):
+        draw_hexagon(i * (r * 2) - r, -c * side - (4 * side + perpendicular), side, first_color)
+    for i in range(1, num_hex, 2):
+        draw_hexagon(i * (r * 2) - r, -c * side - (4 * side + perpendicular), side, second_color)
+
+# рисуем рамку проверки на 500 символов
 t.up()
 t.goto(-r, perpendicular)
 t.down()
