@@ -1,10 +1,11 @@
 """
 Case-study Тесселяция
 Разработчики:
-Кондрашов -
-Бикметов -
-Бычков -
-"""
+
+Кондрашов - 51 %
+Бикметов - 45 %
+Бычков - 44 %
+
 
 import turtle as t
 
@@ -16,7 +17,7 @@ def get_num_hexagons():
     while g != 1:
         try:
             a = int(input())
-            if a > 3 and a < 21:
+            if 3 < a < 21:
                 g = 1
                 return a
             else:
@@ -27,8 +28,9 @@ def get_num_hexagons():
 
 def get_color_choice():
     """Из предлженных цветов предлагает пользователю выбрать один + проверка"""
-    print(
-        'Пожалуйста, выберите цвет\nДопустимые цвета заливки:\nкрасный\nсиний\nзеленый\nжелтый\nоранжевый\nфиолетовый\nрозовый\nциан\nсерый\nчерный')
+    print('Пожалуйста, выберите цвет\nДопустимые цвета '
+          'заливки:\nкрасный\nсиний\nзеленый\nжелтый\nоранжевый\nфиолетовый\nрозовый\nциан\nсерый\nчерный')
+
     print('Пожалуйста, введите цвет: ', end='')
     list_color = ['красный', 'синий', 'зеленый', 'желтый', 'оранжевый', 'фиолетовый', 'розовый', 'циан', 'серый',
                   'черный']
@@ -48,9 +50,9 @@ def get_color_choice():
 
 def draw_hexagon(x, y, side, color):
     """Рисует правильный шестиуглольник на координатах, с заданной стороной, нужного цвета"""
+    t.speed(100000)
     t.up()
-    t.speed(10000)
-    t.goto(x, y)
+    t.goto(x - 250, y + 250)
     t.down()
     t.color(color)
     t.left(30)
@@ -79,45 +81,36 @@ first_color = get_color_choice()
 
 second_color = get_color_choice()
 
-# рисуем ряды каждого типа
-line = 0
-for c in range(0, num_hex, 4):
-    line += 1
-    if line <= num_hex:
-        for i in range(0, num_hex, 2):
-            draw_hexagon(i * (r * 2), -c * (6 / 4) * side, side, second_color)
-        for i in range(1, num_hex, 2):
-            draw_hexagon(i * (r * 2), -c * (6 / 4) * side, side, first_color)
-    else:
-        break
-    line += 1
-    if line <= num_hex:
-        for i in range(0, num_hex, 2):
-            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (side + perpendicular), side, second_color)
-        for i in range(1, num_hex, 2):
-            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (side + perpendicular), side, first_color)
-    else:
-        break
-    line += 1
-    if line <= num_hex:
-        for i in range(0, num_hex, 2):
-            draw_hexagon(i * (r * 2), -c * (6 / 4) * side - 3 * side, side, first_color)
-        for i in range(1, num_hex, 2):
-            draw_hexagon(i * (r * 2), -c * (6 / 4) * side - 3 * side, side, second_color)
-    else:
-        break
-    line += 1
-    if line <= num_hex:
-        for i in range(0, num_hex, 2):
-            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (4 * side + perpendicular), side, first_color)
-        for i in range(1, num_hex, 2):
-            draw_hexagon(i * (r * 2) - r, -c * (6 / 4) * side - (4 * side + perpendicular), side, second_color)
-    else:
-        break
 
-# рисуем рамку проверки на 500 символов
+
+def non_or_one(a):
+    return not a % 2 == 0
+
+
+# рисуем ряды
+def line1(v, m, n):
+    m1 = non_or_one(m)
+
+    for i in range(0, num_hex, 2):
+        draw_hexagon(i * (r * 2) - v - r * m1, -1.5 * m * side - 0, side, n * second_color + (1 - n) * first_color)
+    for i in range(1, num_hex, 2):
+        draw_hexagon(i * (r * 2) - v - r * m1, -1.5 * m * side - 0, side, n * first_color + (1 - n) * second_color)
+
+
+n = 0
+for i in range(num_hex):
+    if n == 4:
+        n = 0
+    if n == 0 or n == 1:
+        line1(0, i, 0)
+    else:
+        line1(0, i, 1)
+    n += 1
+
+'''рисуем рамку 500x500 для проверки правильности размера'''
 t.up()
-t.goto(-r, perpendicular)
+t.goto(-r - 250, perpendicular + 250)
+
 t.down()
 for i in range(4):
     t.forward(500)
