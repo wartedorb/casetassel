@@ -1,10 +1,11 @@
 """
 Case-study Тесселяция
 Разработчики:
+
 Кондрашов - 51 %
 Бикметов - 45 %
 Бычков - 44 %
-"""
+
 
 import turtle as t
 
@@ -29,6 +30,7 @@ def get_color_choice():
     """Из предлженных цветов предлагает пользователю выбрать один + проверка"""
     print('Пожалуйста, выберите цвет\nДопустимые цвета '
           'заливки:\nкрасный\nсиний\nзеленый\nжелтый\nоранжевый\nфиолетовый\nрозовый\nциан\nсерый\nчерный')
+
     print('Пожалуйста, введите цвет: ', end='')
     list_color = ['красный', 'синий', 'зеленый', 'желтый', 'оранжевый', 'фиолетовый', 'розовый', 'циан', 'серый',
                   'черный']
@@ -55,12 +57,12 @@ def draw_hexagon(x, y, side, color):
     t.color(color)
     t.left(30)
     t.begin_fill()
-    for r in range(6):
+    for const in range(6):
         t.forward(side)
         t.right(60)
     t.end_fill()
     t.color('black')
-    for r in range(6):
+    for const in range(6):
         t.forward(side)
         t.right(60)
     t.right(30)
@@ -78,6 +80,7 @@ perpendicular = (side ** 2 - r ** 2) ** (1 / 2)
 first_color = get_color_choice()
 
 second_color = get_color_choice()
+
 
 
 def non_or_one(a):
@@ -107,6 +110,7 @@ for i in range(num_hex):
 '''рисуем рамку 500x500 для проверки правильности размера'''
 t.up()
 t.goto(-r - 250, perpendicular + 250)
+
 t.down()
 for i in range(4):
     t.forward(500)
